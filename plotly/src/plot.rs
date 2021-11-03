@@ -262,7 +262,7 @@ impl Plot {
     ///
     /// If `plot_div_id` is `None` the plot div id will be randomly generated, otherwise the user
     /// supplied div id is used.
-    pub fn to_inline_html<T: Into<Option<&'static str>>>(&self, plot_div_id: T) -> String {
+    pub fn to_inline_html<'a, T: Into<Option<&'a str>>>(&self, plot_div_id: T) -> String {
         let plot_div_id = plot_div_id.into();
         match plot_div_id {
             Some(id) => self.render_inline(id.as_ref()),
@@ -358,7 +358,7 @@ impl Plot {
         templates.join(PLOTLY_JS)
     }
 
-    fn render_plot_data(&self) -> String {
+    pub fn render_plot_data(&self) -> String {
         let mut plot_data = String::new();
         for (idx, trace) in self.traces.iter().enumerate() {
             let s = trace.serialize();
